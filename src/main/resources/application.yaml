@@ -1,0 +1,22 @@
+spring:
+  config:
+    import: optional:file:.env[.properties]
+  application:
+    name: api_gateway
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          routes:
+            - id: flowmanager
+              uri: ${FLOW_MANAGER_URI}
+              predicates:
+                - Path=${FLOW_MANAGER_PATH}
+server:
+  port: 8082
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    instance:
+      instance-id: ${spring.application.name}:${server.port}
