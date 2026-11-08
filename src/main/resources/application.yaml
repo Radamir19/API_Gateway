@@ -12,6 +12,23 @@ spring:
               uri: ${FLOW_MANAGER_URI}
               predicates:
                 - Path=${FLOW_MANAGER_PATH}
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            provider: keycloak
+            client-id: gateway
+            client-secret: ${CLIENT_SECRET}
+            client-name: gateway
+            authorization-grant-type: authorization_code
+            scope: openid, profile, email
+        provider:
+          keycloak:
+            issuer-uri: ${OAUTH_ISSUER_URI}
+      resourceserver:
+        jwt:
+          issuer-uri: ${OAUTH_ISSUER_URI}
 server:
   port: 8082
 eureka:
